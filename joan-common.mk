@@ -412,6 +412,12 @@ PRODUCT_BOOT_JARS += \
 PRODUCT_PACKAGES += \
     JoanParts
 
+# The USB power delivery state. Not device specific: joan has qualcomm's own
+# driver, so the objects and the request are both in sysfs and the app needs
+# nothing but the sepolicy below.
+PRODUCT_PACKAGES += \
+    QcomPdInfo
+
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/qmi_fw.conf:$(TARGET_COPY_OUT_VENDOR)/etc/qmi_fw.conf
 
