@@ -345,3 +345,11 @@ firmware_directories /vendor/firmware_mnt/image/
 /sys/class/power_supply/battery  battery_charging_enabled   0660    system  system
 /sys/class/power_supply/battery  charging_enabled           0660    system  system
 /sys/class/power_supply/battery  input_suspend              0660    system  system
+
+# The one knob parts/ offers. Everything else it shows is read-only, and
+# ueventd leaves those to root the way the driver created them.
+#
+# charging_showcase is LG's demo mode - the charging driver holds the cell in
+# the range the device tree gives it rather than filling it, which is what a
+# handset going into a drawer wants.
+/sys/devices/platform/lge-unified-nodes  charging_showcase  0664  system  system

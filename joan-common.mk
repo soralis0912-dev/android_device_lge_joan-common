@@ -407,6 +407,11 @@ PRODUCT_PACKAGES += \
 PRODUCT_BOOT_JARS += \
     com.lge
 
+# What LG's charging driver knows about the cell, which AOSP has no field for -
+# see parts/.
+PRODUCT_PACKAGES += \
+    JoanParts
+
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/qmi_fw.conf:$(TARGET_COPY_OUT_VENDOR)/etc/qmi_fw.conf
 

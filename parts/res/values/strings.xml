@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2026 The LineageOS Project
+
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">Joan Parts</string>
+
+    <string name="value_unavailable">Not available</string>
+
+    <!-- Battery health -->
+    <string name="battery_health_title">Battery health</string>
+    <string name="battery_health_summary">Wear, charge cycles and charging state</string>
+    <string name="battery_cell_category">Cell</string>
+    <string name="battery_charging_category">Charging</string>
+    <string name="battery_age_title">Remaining capacity</string>
+    <string name="battery_condition_title">Condition</string>
+    <string name="battery_cycle_title">Charge cycles</string>
+    <string name="battery_percent"><xliff:g id="percent" example="82">%1$d</xliff:g>%%</string>
+    <string name="battery_condition_good">Good</string>
+    <string name="battery_condition_fair">Fair</string>
+    <string name="battery_condition_poor">Worn</string>
+    <string name="charger_name_title">Charging driver</string>
+    <string name="fast_charge_title">Fast charging</string>
+    <string name="fast_charge_active">In use</string>
+    <string name="fast_charge_inactive">Supported, not in use</string>
+    <string name="fast_charge_unsupported">Not supported</string>
+    <string name="storage_mode_title">Storage mode</string>
+    <string name="storage_mode_on" formatted="false">Holding the charge between 45% and 50%</string>
+    <string name="storage_mode_off">Charge normally</string>
+    <string name="storage_mode_failed">Could not change storage mode</string>
+    <string name="battery_health_footer" formatted="false">Remaining capacity is what the fuel gauge has learned the battery holds, against what it was built to hold. Storage mode is enforced by the charging driver, so it keeps holding while the phone is asleep — leave it off for everyday use.</string>
+
+</resources>

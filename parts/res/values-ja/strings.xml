@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2026 The LineageOS Project
+
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="value_unavailable">取得できません</string>
+
+    <!-- Battery health -->
+    <string name="battery_health_title">バッテリーの状態</string>
+    <string name="battery_health_summary">劣化・充放電回数・充電の状態</string>
+    <string name="battery_cell_category">セル</string>
+    <string name="battery_charging_category">充電</string>
+    <string name="battery_age_title">残存容量</string>
+    <string name="battery_condition_title">状態</string>
+    <string name="battery_cycle_title">充放電回数</string>
+    <string name="battery_condition_good">良好</string>
+    <string name="battery_condition_fair">普通</string>
+    <string name="battery_condition_poor">劣化</string>
+    <string name="charger_name_title">充電ドライバ</string>
+    <string name="fast_charge_title">急速充電</string>
+    <string name="fast_charge_active">動作中</string>
+    <string name="fast_charge_inactive">対応（未使用）</string>
+    <string name="fast_charge_unsupported">非対応</string>
+    <string name="storage_mode_title">保管モード</string>
+    <string name="storage_mode_on" formatted="false">45%〜50% を保持します</string>
+    <string name="storage_mode_off">通常どおり充電します</string>
+    <string name="storage_mode_failed">保管モードを変更できませんでした</string>
+    <string name="battery_health_footer" formatted="false">残存容量は、バッテリーが実際に蓄えられるとゲージが学習した量を、設計容量と比べたものです。保管モードは充電ドライバ側で保持するため、スリープ中も効きます。ふだん使いではオフにしてください。</string>
+
+</resources>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2026 The LineageOS Project
+
+     SPDX-License-Identifier: Apache-2.0
+-->
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:title="@string/battery_health_title">
+
+    <PreferenceCategory
+        app:key="cell"
+        app:title="@string/battery_cell_category">
+
+        <Preference
+            app:key="battery_age"
+            app:selectable="false"
+            app:iconSpaceReserved="false"
+            app:title="@string/battery_age_title" />
+
+        <Preference
+            app:key="battery_condition"
+            app:selectable="false"
+            app:iconSpaceReserved="false"
+            app:title="@string/battery_condition_title" />
+
+        <Preference
+            app:key="battery_cycle"
+            app:selectable="false"
+            app:iconSpaceReserved="false"
+            app:title="@string/battery_cycle_title" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:key="charging"
+        app:title="@string/battery_charging_category">
+
+        <Preference
+            app:key="charger_name"
+            app:selectable="false"
+            app:iconSpaceReserved="false"
+            app:title="@string/charger_name_title" />
+
+        <Preference
+            app:key="fast_charge"
+            app:selectable="false"
+            app:iconSpaceReserved="false"
+            app:title="@string/fast_charge_title" />
+
+        <SwitchPreferenceCompat
+            app:key="storage_mode"
+            app:iconSpaceReserved="false"
+            app:title="@string/storage_mode_title"
+            app:summaryOn="@string/storage_mode_on"
+            app:summaryOff="@string/storage_mode_off" />
+
+    </PreferenceCategory>
+
+    <com.android.settingslib.widget.FooterPreference
+        android:key="battery_health_footer"
+        android:selectable="false"
+        android:title="@string/battery_health_footer" />
+
+</PreferenceScreen>
