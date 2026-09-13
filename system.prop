@@ -40,6 +40,17 @@ ro.charger.enable_suspend=true
 dalvik.vm.dex2oat64.enabled=true
 ro.sys.fw.dex2oat_thread_count=8
 
+# Device info card
+# The banner in Settings has no way of working these out on its own: the
+# processor name is not in any property the platform sets, and deriving the
+# camera resolutions from camera2 would report the sensor arrays (16.3 / 13.1 /
+# 5.0) rather than what the phone was sold as. s5k3m3 is the 16 MP main sensor,
+# imx351 the 13 MP wide one and hi553 the 5 MP front one - see
+# configs/camera/camera_config.xml.
+persist.sys.device_camera_info_front=5
+persist.sys.device_camera_info_rear=16,13
+persist.sys.processor_info=Qualcomm_Snapdragon_835
+
 # Display
 debug.sf.enable_gl_backpressure=1
 debug.sf.hw=1
