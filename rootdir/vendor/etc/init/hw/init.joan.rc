@@ -75,6 +75,9 @@ on early-boot
     chown system graphics /sys/class/graphics/fb2/hdcp/tp
 
 on boot
+    # Swipe gestures - the touch HAL cannot toggle them one by one
+    write /sys/devices/virtual/input/lge_touch/swipe_enable 1
+
     # Dynamic Resolution Switching
     chmod 644 /sys/class/graphics/fb0/mode
     chmod 644 /sys/class/graphics/fb0/modes

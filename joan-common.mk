@@ -427,7 +427,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Touch
 PRODUCT_PACKAGES += \
-    vendor.lineage.touch@1.0-service.joan
+    vendor.lineage.touch-service.lge
+
+$(call soong_config_set,LGE_TOUCH,LEGACY_TOUCHSCREEN_INTERFACE_HEADERS,$(LOCAL_PATH)/include/touch)
 
 # TimeKeep
 PRODUCT_PACKAGES += \
