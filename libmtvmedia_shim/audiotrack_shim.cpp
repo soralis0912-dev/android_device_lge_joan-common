@@ -62,11 +62,57 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include <binder/Binder.h>
 #include <media/AudioTrack.h>
 #include <utils/Log.h>
 #include <utils/RefBase.h>
 
 namespace android {
+
+namespace {
+
+// The function-pointer callback the blob hands its constructor, in the shape
+// AudioTrack takes callbacks today. AudioTrack carried exactly this as
+// LegacyCallbackWrapper, behind a set() overload for vendor code, until
+// android 16 removed both; this is that class.
+class LegacyCallbackWrapper : public AudioTrack::IAudioTrackCallback {
+  public:
+    typedef void (*callback_t)(int event, void* user, void* info);
+
+    LegacyCallbackWrapper(callback_t callback, void* user) : mCallback(callback), mData(user) {}
+
+    size_t onMoreData(const AudioTrack::Buffer& buffer) override {
+        AudioTrack::Buffer copy = buffer;
+        mCallback(AudioTrack::EVENT_MORE_DATA, mData, static_cast<void*>(&copy));
+        return copy.size();
+    }
+    void onUnderrun() override { mCallback(AudioTrack::EVENT_UNDERRUN, mData, nullptr); }
+    void onLoopEnd(int32_t loopsRemaining) override {
+        mCallback(AudioTrack::EVENT_LOOP_END, mData, &loopsRemaining);
+    }
+    void onMarker(uint32_t markerPosition) override {
+        mCallback(AudioTrack::EVENT_MARKER, mData, &markerPosition);
+    }
+    void onNewPos(uint32_t newPos) override {
+        mCallback(AudioTrack::EVENT_NEW_POS, mData, &newPos);
+    }
+    void onBufferEnd() override { mCallback(AudioTrack::EVENT_BUFFER_END, mData, nullptr); }
+    void onNewIAudioTrack() override {
+        mCallback(AudioTrack::EVENT_NEW_IAUDIOTRACK, mData, nullptr);
+    }
+    void onStreamEnd() override { mCallback(AudioTrack::EVENT_STREAM_END, mData, nullptr); }
+    size_t onCanWriteMoreData(const AudioTrack::Buffer& buffer) override {
+        AudioTrack::Buffer copy = buffer;
+        mCallback(AudioTrack::EVENT_CAN_WRITE_MORE_DATA, mData, static_cast<void*>(&copy));
+        return copy.size();
+    }
+
+  private:
+    const callback_t mCallback;
+    void* const mData;
+};
+
+}  // anonymous namespace
 
 class LegacyTrak : public RefBase {
 public:
@@ -123,10 +169,7 @@ private:
     // when the track is restored after an AudioFlinger death).
     void mirror();
 
-    // The track itself. Nothing else needs holding: the legacy set() wraps the
-    // function-pointer callback in an IAudioTrackCallback that AudioTrack owns
-    // by strong reference (mLegacyCallbackWrapper), so it lives exactly as long
-    // as the track does.
+    // The track itself.
     sp<AudioTrack> mReal;  // 0x08
     uint8_t mPad0[0x48 - 0x0c];
     uint32_t mFrameCount;   // 0x48   AudioTrack::frameCount()
@@ -135,6 +178,11 @@ private:
     uint8_t mPad2[0x1bc - 0x68];
     uint32_t mFrameSize;    // 0x1bc  AudioTrack::frameSize()
     int32_t mStatus;        // 0x1c0  AudioTrack::initCheck()
+
+    // AudioTrack only keeps a weak reference to its callback, so the wrapper
+    // around the blob's function pointer is held here, for as long as the
+    // track is.
+    sp<AudioTrack::IAudioTrackCallback> mCallback;
 };
 
 // `mov.w r0, #0x348` ahead of both constructor calls in AudioOutput::open().
@@ -148,17 +196,25 @@ LegacyTrak::LegacyTrak(audio_stream_type_t streamType, uint32_t sampleRate, audi
                        const audio_attributes_t* pAttributes, bool doNotReconnect,
                        float maxRequiredSpeed, int32_t selectedDeviceId)
     : mFrameCount(0), mChannelCount(0), mFrameSize(0), mStatus(NO_INIT) {
-    // What android 9's constructor did, and still the supported way in: the
-    // no-argument constructor leaves the track unconfigured, and the legacy
-    // set() overload - kept in AudioTrack.h precisely because vendor code links
-    // against it - takes the old function-pointer callback and the uid/pid pair
-    // and builds the AttributionSourceState and the callback wrapper itself.
+    // What android 9's constructor did: the no-argument constructor leaves the
+    // track unconfigured and set() fills it in. The uid/pid pair and the
+    // function-pointer callback go in the way the removed legacy set() overload
+    // used to pass them on.
+    AttributionSourceState attributionSource;
+    attributionSource.uid = static_cast<int32_t>(uid);
+    attributionSource.pid = pid;
+    attributionSource.token = sp<BBinder>::make();
+    if (cbf != nullptr) {
+        mCallback = sp<LegacyCallbackWrapper>::make(cbf, user);
+    }
+
     mReal = sp<AudioTrack>::make();
-    mReal->set(streamType, sampleRate, format, channelMask, frameCount, flags, cbf, user,
-               notificationFrames, nullptr /* sharedBuffer */, false /* threadCanCallJava */,
-               sessionId, static_cast<AudioTrack::transfer_type>(transferType), offloadInfo,
-               static_cast<uid_t>(uid), static_cast<pid_t>(pid), pAttributes, doNotReconnect,
-               maxRequiredSpeed, static_cast<audio_port_handle_t>(selectedDeviceId));
+    mReal->set(streamType, sampleRate, format, static_cast<audio_channel_mask_t>(channelMask),
+               frameCount, flags, mCallback, notificationFrames, nullptr /* sharedBuffer */,
+               false /* threadCanCallJava */, sessionId,
+               static_cast<AudioTrack::transfer_type>(transferType), offloadInfo,
+               attributionSource, pAttributes, doNotReconnect, maxRequiredSpeed,
+               static_cast<audio_port_handle_t>(selectedDeviceId));
 
     mirror();
     ALOGI("track %p: status=%d rate=%u fmt=%#x mask=%#x frames=%u size=%u", mReal.get(), mStatus,
