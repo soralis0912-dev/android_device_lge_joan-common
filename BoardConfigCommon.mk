@@ -29,9 +29,6 @@ TARGET_BOARD_PLATFORM := msm8998
 TARGET_BOARD_PLATFORM_GPU := qcom-adreno540
 TARGET_HAS_NO_SELECT_BUTTON := true
 
-# ANT+
-BOARD_ANT_WIRELESS_DEVICE := "qualcomm-hidl"
-
 # Android Verified Boot
 BOARD_AVB_ENABLE := false
 

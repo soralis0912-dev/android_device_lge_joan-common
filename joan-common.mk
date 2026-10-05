@@ -33,10 +33,6 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     apns-conf.xml
 
-# ANT+
-PRODUCT_PACKAGES += \
-    AntHalService-Soong
-
 # ARCore
 TARGET_INCLUDE_STOCK_ARCORE := true
 
