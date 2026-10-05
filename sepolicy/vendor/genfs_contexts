@@ -26,6 +26,5 @@ genfscon sysfs /devices/virtual/input/input0																				u:object_r:sysfs
 genfscon sysfs /devices/virtual/input/input1																				u:object_r:sysfs_input:s0
 genfscon sysfs /devices/virtual/input/lge_fingerprint																		u:object_r:sysfs_lge_fingerprint:s0
 genfscon sysfs /devices/virtual/input/mice																					u:object_r:sysfs_input:s0
-genfscon sysfs /devices/virtual/panel/img_tune																				u:object_r:sysfs_livedisplay_tuneable:s0
 
 genfscon sysfs /devices/vendor/vendor:lge-veneer-psy/power_supply/veneer													u:object_r:sysfs_lge_power:s0
