@@ -14,6 +14,9 @@
 #include <nativehelper/JNIHelp.h>
 #include <utils/Mutex.h>
 
+#include <memory>
+#include <unordered_map>
+
 #include "IDmb.h"
 
 /*
@@ -152,18 +155,26 @@ private:
     jobject mWeakThiz;
 };
 
-// What mNativeContext points at.
+// What a Dmb object is connected to.
 struct DmbContext {
     sp<IDmb> dmb;
     sp<JNIDmbClient> client;
 };
 
+/*
+ * mNativeContext is a java int, so it cannot hold a pointer in a 64-bit
+ * process. It holds a handle into this table instead - 0 means not connected -
+ * and the table hands out shared references, so an entry point that is already
+ * running keeps its context alive across a concurrent native_release.
+ */
 Mutex gLock;
+std::unordered_map<jint, std::shared_ptr<DmbContext>> gContexts;
+jint gNextHandle = 1;
 
-DmbContext* contextOf(JNIEnv* env, jobject thiz) {
+std::shared_ptr<DmbContext> contextOf(JNIEnv* env, jobject thiz) {
     Mutex::Autolock lock(gLock);
-    return reinterpret_cast<DmbContext*>(
-            static_cast<uintptr_t>(env->GetIntField(thiz, gFields.context)));
+    auto it = gContexts.find(env->GetIntField(thiz, gFields.context));
+    return it == gContexts.end() ? nullptr : it->second;
 }
 
 /*
@@ -172,7 +183,7 @@ DmbContext* contextOf(JNIEnv* env, jobject thiz) {
  * something to crash on, so it throws instead.
  */
 sp<IDmb> dmbOf(JNIEnv* env, jobject thiz) {
-    DmbContext* ctx = contextOf(env, thiz);
+    std::shared_ptr<DmbContext> ctx = contextOf(env, thiz);
     if (ctx == nullptr || ctx->dmb == nullptr) {
         jniThrowException(env, "java/lang/IllegalStateException", "Dmb is not connected");
         return nullptr;
@@ -200,28 +211,33 @@ void dmb_native_setup(JNIEnv* env, jobject thiz, jobject weakThiz) {
         return;
     }
 
-    DmbContext* ctx = new DmbContext();
+    auto ctx = std::make_shared<DmbContext>();
     ctx->dmb = dmb;
     ctx->client = client;
 
     Mutex::Autolock lock(gLock);
-    env->SetIntField(thiz, gFields.context,
-                     static_cast<jint>(reinterpret_cast<uintptr_t>(ctx)));
+    jint handle = gNextHandle;
+    while (handle == 0 || gContexts.count(handle)) handle++;
+    gNextHandle = handle + 1;
+    gContexts[handle] = ctx;
+    env->SetIntField(thiz, gFields.context, handle);
     ALOGI("connected to broadcast.dmb");
 }
 
 void dmb_release(JNIEnv* env, jobject thiz) {
-    DmbContext* ctx;
+    std::shared_ptr<DmbContext> ctx;
     {
         Mutex::Autolock lock(gLock);
-        ctx = reinterpret_cast<DmbContext*>(
-                static_cast<uintptr_t>(env->GetIntField(thiz, gFields.context)));
+        auto it = gContexts.find(env->GetIntField(thiz, gFields.context));
+        if (it != gContexts.end()) {
+            ctx = std::move(it->second);
+            gContexts.erase(it);
+        }
         env->SetIntField(thiz, gFields.context, 0);
     }
     if (ctx == nullptr) return;
     if (ctx->dmb != nullptr) ctx->dmb->disconnect();
     if (ctx->client != nullptr) ctx->client->release(env);
-    delete ctx;
 }
 
 void dmb_init(JNIEnv* env, jobject thiz, jint mode, jint arg) {
