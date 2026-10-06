@@ -666,7 +666,7 @@ product/etc/permissions/com.lge.broadcast.jfullseg.xml:system/etc/permissions/co
 product/framework/com.lge.broadcast.jfullseg.jar:system/framework/com.lge.broadcast.jfullseg.jar|6bbe83bdfc58000cdae273dc6823cc8aa89f6314
 product/etc/init/lgemtvserver.rc|0eba712bdb5619b5e01f04f0efb049325d1af0fc
 product/lib/libmtv_servicejp.lge.so:system/lib/libmtv_servicejp.lge.so;DISABLE_DEPS|57381b426605615477a43e2bd67e97f107e7c138
-product/priv-app/LGJDMB/LGJDMB.apk:system/priv-app/LGJDMB/LGJDMB.apk|b87d3f5465463dd5f137261468693a330d53e641|854db6161d97ac9118524372f505933f6395fa20
+product/priv-app/LGJDMB/LGJDMB.apk:system/priv-app/LGJDMB/LGJDMB.apk|b87d3f5465463dd5f137261468693a330d53e641|d95af6f7fad933dc1d3dc6ea0aed35ab2471ac5f
 # Written as src:dst because the dump is one non-treble /system - the sources
 # sit at lib/ and lib64/, not under a system/ directory of their own.
 #

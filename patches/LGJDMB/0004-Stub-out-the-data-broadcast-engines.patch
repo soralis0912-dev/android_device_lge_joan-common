@@ -1,0 +1,680 @@
+diff --git a/smali/com/access/bml/BMLPeer.smali b/smali/com/access/bml/BMLPeer.smali
+index db24ef9..46e7f35 100644
+--- a/smali/com/access/bml/BMLPeer.smali
++++ b/smali/com/access/bml/BMLPeer.smali
+@@ -303,13 +303,22 @@
+     return-void
+ .end method
+ 
+-.method public native BMLPeer_Initialize()V
++.method public BMLPeer_Initialize()V
++    .locals 0
++
++    return-void
+ .end method
+ 
+-.method public native BMLPeer_NativeFinalize()V
++.method public BMLPeer_NativeFinalize()V
++    .locals 0
++
++    return-void
+ .end method
+ 
+-.method public native BMLPeer_SetAreaBroadcastInfo(I)V
++.method public BMLPeer_SetAreaBroadcastInfo(I)V
++    .locals 0
++
++    return-void
+ .end method
+ 
+ .method public DsmccPeer_NotifyIdleStatus(II)I
+diff --git a/smali/com/access/bml/BMLView.smali b/smali/com/access/bml/BMLView.smali
+index 5fd43ea..2c0dd12 100644
+--- a/smali/com/access/bml/BMLView.smali
++++ b/smali/com/access/bml/BMLView.smali
+@@ -219,7 +219,6 @@
+     const-string v0, "BML"
+ 
+     .line 2102
+-    invoke-static {v0}, Ljava/lang/System;->loadLibrary(Ljava/lang/String;)V
+ 
+     return-void
+ .end method
+@@ -582,13 +581,28 @@
+     return-void
+ .end method
+ 
+-.method private native BML_SetResolution(II)F
++.method private BML_SetResolution(II)F
++    .locals 1
++
++    const/4 v0, 0x0
++
++    return v0
+ .end method
+ 
+-.method private native BML_demux_incoming_packet([B)I
++.method private BML_demux_incoming_packet([B)I
++    .locals 1
++
++    const/4 v0, -0x1
++
++    return v0
+ .end method
+ 
+-.method private native BML_demux_incoming_section(I[BI)I
++.method private BML_demux_incoming_section(I[BI)I
++    .locals 1
++
++    const/4 v0, -0x1
++
++    return v0
+ .end method
+ 
+ .method private SetResolution(II)V
+@@ -960,16 +974,34 @@
+ 
+ 
+ # virtual methods
+-.method public native BML_BookmarkInitialize()V
++.method public BML_BookmarkInitialize()V
++    .locals 0
++
++    return-void
+ .end method
+ 
+-.method public native BML_Bookmark_ActionDelete(I)I
++.method public BML_Bookmark_ActionDelete(I)I
++    .locals 1
++
++    const/4 v0, -0x1
++
++    return v0
+ .end method
+ 
+-.method public native BML_Bookmark_ActionDeleteAll()I
++.method public BML_Bookmark_ActionDeleteAll()I
++    .locals 1
++
++    const/4 v0, -0x1
++
++    return v0
+ .end method
+ 
+-.method public native BML_Bookmark_ActionGoto(I)I
++.method public BML_Bookmark_ActionGoto(I)I
++    .locals 1
++
++    const/4 v0, -0x1
++
++    return v0
+ .end method
+ 
+ .method public BML_CB_BookmarkAddBookmarkEntry(Ljava/lang/Object;)I
+@@ -1106,37 +1138,88 @@
+     return-void
+ .end method
+ 
+-.method public native BML_CompleteHalt(I)V
++.method public BML_CompleteHalt(I)V
++    .locals 0
++
++    return-void
+ .end method
+ 
+-.method public native BML_CustomizeEngine(I)Z
++.method public BML_CustomizeEngine(I)Z
++    .locals 1
++
++    const/4 v0, 0x0
++
++    return v0
+ .end method
+ 
+-.method public native BML_DsmccAPI_DetectEIT()I
++.method public BML_DsmccAPI_DetectEIT()I
++    .locals 1
++
++    const/4 v0, -0x1
++
++    return v0
+ .end method
+ 
+-.method public native BML_DsmccAPI_SetChannel(Lcom/access/bml/BMLDtvType$TDSMCCTransmissionLine;ILcom/access/bml/BMLDtvType$TDSMCCFirstView;Lcom/access/bml/BMLDtvType$TDSMCCPMTData;)I
++.method public BML_DsmccAPI_SetChannel(Lcom/access/bml/BMLDtvType$TDSMCCTransmissionLine;ILcom/access/bml/BMLDtvType$TDSMCCFirstView;Lcom/access/bml/BMLDtvType$TDSMCCPMTData;)I
++    .locals 1
++
++    const/4 v0, -0x1
++
++    return v0
+ .end method
+ 
+-.method public native BML_EscapeHalt()Z
++.method public BML_EscapeHalt()Z
++    .locals 1
++
++    const/4 v0, 0x0
++
++    return v0
+ .end method
+ 
+-.method public native BML_Finalize()V
++.method public BML_Finalize()V
++    .locals 0
++
++    return-void
+ .end method
+ 
+-.method public native BML_GetApplicationMode()I
++.method public BML_GetApplicationMode()I
++    .locals 1
++
++    const/4 v0, -0x1
++
++    return v0
+ .end method
+ 
+-.method public native BML_GetBufferingKeyEventCount()I
++.method public BML_GetBufferingKeyEventCount()I
++    .locals 1
++
++    const/4 v0, -0x1
++
++    return v0
+ .end method
+ 
+-.method public native BML_GetDTVEvent()Z
++.method public BML_GetDTVEvent()Z
++    .locals 1
++
++    const/4 v0, 0x0
++
++    return v0
+ .end method
+ 
+-.method public native BML_GetHaltStatus()I
++.method public BML_GetHaltStatus()I
++    .locals 1
++
++    const/4 v0, -0x1
++
++    return v0
+ .end method
+ 
+-.method public native BML_GetLinkStatus()I
++.method public BML_GetLinkStatus()I
++    .locals 1
++
++    const/4 v0, -0x1
++
++    return v0
+ .end method
+ 
+ .method public BML_GetProperty(Ljava/lang/String;[B)I
+@@ -1179,73 +1262,176 @@
+     return p0
+ .end method
+ 
+-.method public native BML_HasFocusOrBlurEventInQueue()Z
++.method public BML_HasFocusOrBlurEventInQueue()Z
++    .locals 1
++
++    const/4 v0, 0x0
++
++    return v0
+ .end method
+ 
+-.method public native BML_Initialize(I)Z
++.method public BML_Initialize(I)Z
++    .locals 1
++
++    const/4 v0, 0x0
++
++    return v0
+ .end method
+ 
+-.method public native BML_IsHalt()Z
++.method public BML_IsHalt()Z
++    .locals 1
++
++    const/4 v0, 0x0
++
++    return v0
+ .end method
+ 
+-.method public native BML_IsTuneByBookmark()Z
++.method public BML_IsTuneByBookmark()Z
++    .locals 1
++
++    const/4 v0, 0x0
++
++    return v0
+ .end method
+ 
+-.method public native BML_NVRAM_DeleteAll()I
++.method public BML_NVRAM_DeleteAll()I
++    .locals 1
++
++    const/4 v0, -0x1
++
++    return v0
+ .end method
+ 
+-.method public native BML_NotifyBroadcastStatus(I)Z
++.method public BML_NotifyBroadcastStatus(I)Z
++    .locals 1
++
++    const/4 v0, 0x0
++
++    return v0
+ .end method
+ 
+-.method public native BML_NotifyReturnToEntry()Z
++.method public BML_NotifyReturnToEntry()Z
++    .locals 1
++
++    const/4 v0, 0x0
++
++    return v0
+ .end method
+ 
+-.method public native BML_NotifyServiceChanged(IIII)Z
++.method public BML_NotifyServiceChanged(IIII)Z
++    .locals 1
++
++    const/4 v0, 0x0
++
++    return v0
+ .end method
+ 
+-.method public native BML_NotifyServiceChangedByBookmark(IIIILjava/lang/String;[I)Z
++.method public BML_NotifyServiceChangedByBookmark(IIIILjava/lang/String;[I)Z
++    .locals 1
++
++    const/4 v0, 0x0
++
++    return v0
+ .end method
+ 
+-.method public native BML_PostDTVBEvent_DataEventChanged(I)Z
++.method public BML_PostDTVBEvent_DataEventChanged(I)Z
++    .locals 1
++
++    const/4 v0, 0x0
++
++    return v0
+ .end method
+ 
+-.method public native BML_PostDTVBEvent_EventMessageFired(I)Z
++.method public BML_PostDTVBEvent_EventMessageFired(I)Z
++    .locals 1
++
++    const/4 v0, 0x0
++
++    return v0
+ .end method
+ 
+-.method public native BML_PostDTVBEvent_MainAudioStreamChanged(I)Z
++.method public BML_PostDTVBEvent_MainAudioStreamChanged(I)Z
++    .locals 1
++
++    const/4 v0, 0x0
++
++    return v0
+ .end method
+ 
+-.method public native BML_PostDTVBEvent_MediaStopped(I[B)Z
++.method public BML_PostDTVBEvent_MediaStopped(I[B)Z
++    .locals 1
++
++    const/4 v0, 0x0
++
++    return v0
+ .end method
+ 
+-.method public native BML_PostDTVBEvent_ModuleLocked(I)Z
++.method public BML_PostDTVBEvent_ModuleLocked(I)Z
++    .locals 1
++
++    const/4 v0, 0x0
++
++    return v0
+ .end method
+ 
+-.method public native BML_PostDTVBEvent_ModuleUpdated(I)Z
++.method public BML_PostDTVBEvent_ModuleUpdated(I)Z
++    .locals 1
++
++    const/4 v0, 0x0
++
++    return v0
+ .end method
+ 
+-.method public native BML_RequestHalt(I)Z
++.method public BML_RequestHalt(I)Z
++    .locals 1
++
++    const/4 v0, 0x0
++
++    return v0
+ .end method
+ 
+-.method public native BML_RestoreEngine()V
++.method public BML_RestoreEngine()V
++    .locals 0
++
++    return-void
+ .end method
+ 
+-.method public native BML_SetBrowserWindow(I)V
++.method public BML_SetBrowserWindow(I)V
++    .locals 0
++
++    return-void
+ .end method
+ 
+-.method public native BML_WakeUp()V
++.method public BML_WakeUp()V
++    .locals 0
++
++    return-void
+ .end method
+ 
+-.method public native BML_WindowDisplayImage(I)Z
++.method public BML_WindowDisplayImage(I)Z
++    .locals 1
++
++    const/4 v0, 0x0
++
++    return v0
+ .end method
+ 
+-.method public native BML_WindowRenovate(I)V
++.method public BML_WindowRenovate(I)V
++    .locals 0
++
++    return-void
+ .end method
+ 
+-.method public native BML_WindowSetDisplayImage(IZ)V
++.method public BML_WindowSetDisplayImage(IZ)V
++    .locals 0
++
++    return-void
+ .end method
+ 
+-.method public native BML_appExIMEEndPeer(Z[BI)V
++.method public BML_appExIMEEndPeer(Z[BI)V
++    .locals 0
++
++    return-void
+ .end method
+ 
+ .method public Browser_CB_CommandHandler_HandleCommandProc(Lcom/access/bml/BMLCommandType$TBrowserCmdType;Lcom/access/bml/BMLCommandType$TBrowserReplyType;)I
+@@ -1389,7 +1575,12 @@
+     return-void
+ .end method
+ 
+-.method public native Browser_MainRun()Z
++.method public Browser_MainRun()Z
++    .locals 1
++
++    const/4 v0, 0x0
++
++    return v0
+ .end method
+ 
+ .method public Browser_ReplyToCommand(ILcom/access/bml/BMLCommandType$TBrowserReplyType;)Z
+@@ -1403,13 +1594,24 @@
+     return p0
+ .end method
+ 
+-.method public native Browser_ReplyToCommand(ILjava/lang/Object;)Z
++.method public Browser_ReplyToCommand(ILjava/lang/Object;)Z
++    .locals 1
++
++    const/4 v0, 0x0
++
++    return v0
+ .end method
+ 
+-.method public native Browser_SetPref_Mag(I)V
++.method public Browser_SetPref_Mag(I)V
++    .locals 0
++
++    return-void
+ .end method
+ 
+-.method public native Browser_SetRect(IIIFF)V
++.method public Browser_SetRect(IIIFF)V
++    .locals 0
++
++    return-void
+ .end method
+ 
+ .method public Browser_SetRect(IIII)V
+@@ -1606,25 +1808,54 @@
+     return-void
+ .end method
+ 
+-.method public native Browser_StandardFinalize()V
++.method public Browser_StandardFinalize()V
++    .locals 0
++
++    return-void
+ .end method
+ 
+-.method public native Browser_StandardInitialize(Ljava/lang/String;)Z
++.method public Browser_StandardInitialize(Ljava/lang/String;)Z
++    .locals 1
++
++    const/4 v0, 0x0
++
++    return v0
+ .end method
+ 
+-.method public native Browser_WindowDelete(I)V
++.method public Browser_WindowDelete(I)V
++    .locals 0
++
++    return-void
+ .end method
+ 
+-.method public native Browser_WindowNew()I
++.method public Browser_WindowNew()I
++    .locals 1
++
++    const/4 v0, -0x1
++
++    return v0
+ .end method
+ 
+-.method public native Browser_WindowSetLocation(ILjava/lang/String;I)Z
++.method public Browser_WindowSetLocation(ILjava/lang/String;I)Z
++    .locals 1
++
++    const/4 v0, 0x0
++
++    return v0
+ .end method
+ 
+-.method public native Browser_processKeyEvent(IIIZ)I
++.method public Browser_processKeyEvent(IIIZ)I
++    .locals 1
++
++    const/4 v0, -0x1
++
++    return v0
+ .end method
+ 
+-.method public native Browser_processMouseEvent(IIII)V
++.method public Browser_processMouseEvent(IIII)V
++    .locals 0
++
++    return-void
+ .end method
+ 
+ .method public PushDemuxIncomingPacket([B)I
+@@ -2289,7 +2520,10 @@
+     return-void
+ .end method
+ 
+-.method public native onTimer(I)V
++.method public onTimer(I)V
++    .locals 0
++
++    return-void
+ .end method
+ 
+ .method public onTouchEvent(Landroid/view/MotionEvent;)Z
+diff --git a/smali/com/access/bml_aprofile/TVSystem.smali b/smali/com/access/bml_aprofile/TVSystem.smali
+index d28e99d..58f251a 100644
+--- a/smali/com/access/bml_aprofile/TVSystem.smali
++++ b/smali/com/access/bml_aprofile/TVSystem.smali
+@@ -95,7 +95,6 @@
+     const-string v0, "TvsystemInterface"
+ 
+     .line 78
+-    invoke-static {v0}, Ljava/lang/System;->loadLibrary(Ljava/lang/String;)V
+ 
+     return-void
+ .end method
+@@ -260,52 +259,122 @@
+     return-void
+ .end method
+ 
+-.method private native TvsystemAPI_AddVisibilityChangedEvent(I)V
++.method private TvsystemAPI_AddVisibilityChangedEvent(I)V
++    .locals 0
++
++    return-void
+ .end method
+ 
+-.method private native TvsystemAPI_addDataButtonPressEvent()I
++.method private TvsystemAPI_addDataButtonPressEvent()I
++    .locals 1
++
++    const/4 v0, -0x1
++
++    return v0
+ .end method
+ 
+-.method private native TvsystemAPI_addKeyPressEvent(I)I
++.method private TvsystemAPI_addKeyPressEvent(I)I
++    .locals 1
++
++    const/4 v0, -0x1
++
++    return v0
+ .end method
+ 
+-.method private native TvsystemAPI_addKeyReleaseEvent(I)I
++.method private TvsystemAPI_addKeyReleaseEvent(I)I
++    .locals 1
++
++    const/4 v0, -0x1
++
++    return v0
+ .end method
+ 
+-.method private native TvsystemAPI_addMediaStoppedEvent([B)V
++.method private TvsystemAPI_addMediaStoppedEvent([B)V
++    .locals 0
++
++    return-void
+ .end method
+ 
+-.method private native TvsystemAPI_demuxIncomingPacket([BII)I
++.method private TvsystemAPI_demuxIncomingPacket([BII)I
++    .locals 1
++
++    const/4 v0, -0x1
++
++    return v0
+ .end method
+ 
+-.method private native TvsystemAPI_demuxIncomingSection(I[BI)I
++.method private TvsystemAPI_demuxIncomingSection(I[BI)I
++    .locals 1
++
++    const/4 v0, -0x1
++
++    return v0
+ .end method
+ 
+-.method private native TvsystemAPI_endSystem()I
++.method private TvsystemAPI_endSystem()I
++    .locals 1
++
++    const/4 v0, -0x1
++
++    return v0
+ .end method
+ 
+-.method private native TvsystemAPI_finalizeSystem()V
++.method private TvsystemAPI_finalizeSystem()V
++    .locals 0
++
++    return-void
+ .end method
+ 
+-.method private native TvsystemAPI_initializeSystem(Lcom/access/bml_aprofile/TVSystemInterface;)I
++.method private TvsystemAPI_initializeSystem(Lcom/access/bml_aprofile/TVSystemInterface;)I
++    .locals 1
++
++    const/4 v0, -0x1
++
++    return v0
+ .end method
+ 
+-.method private native TvsystemAPI_returnToMain()V
++.method private TvsystemAPI_returnToMain()V
++    .locals 0
++
++    return-void
+ .end method
+ 
+-.method private native TvsystemAPI_setChannel(I)I
++.method private TvsystemAPI_setChannel(I)I
++    .locals 1
++
++    const/4 v0, -0x1
++
++    return v0
+ .end method
+ 
+-.method private native TvsystemAPI_setStream(Ljava/lang/String;)I
++.method private TvsystemAPI_setStream(Ljava/lang/String;)I
++    .locals 1
++
++    const/4 v0, -0x1
++
++    return v0
+ .end method
+ 
+-.method private native TvsystemAPI_setURI(Ljava/lang/String;)I
++.method private TvsystemAPI_setURI(Ljava/lang/String;)I
++    .locals 1
++
++    const/4 v0, -0x1
++
++    return v0
+ .end method
+ 
+-.method private native TvsystemAPI_setZipCode([B)V
++.method private TvsystemAPI_setZipCode([B)V
++    .locals 0
++
++    return-void
+ .end method
+ 
+-.method private native TvsystemAPI_startSystem(Landroid/view/Surface;Landroid/content/res/AssetManager;Ljava/lang/String;Ljava/lang/String;)I
++.method private TvsystemAPI_startSystem(Landroid/view/Surface;Landroid/content/res/AssetManager;Ljava/lang/String;Ljava/lang/String;)I
++    .locals 1
++
++    const/4 v0, -0x1
++
++    return v0
+ .end method
+ 
+ .method static synthetic access$0(Lcom/access/bml_aprofile/TVSystem;Ljava/lang/String;)V

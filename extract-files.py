@@ -21,6 +21,9 @@ from extract_utils.utils import (
     run_cmd,
 )
 
+import os
+import zipfile
+
 namespace_imports = [
     "device/lge/joan-common",
     "hardware/lge",
@@ -34,6 +37,16 @@ namespace_imports = [
 
 def lib_fixup_vendor_suffix(lib: str, partition: str, *args, **kwargs):
     return f'{lib}_{partition}' if partition == 'vendor' else None
+
+
+def blob_fixup_drop_native_libs(ctx, file, file_path: str, *args, **kwargs):
+    """Rewrite an apk without its lib/ entries."""
+    stripped = f'{file_path}.nolib'
+    with zipfile.ZipFile(file_path) as src, zipfile.ZipFile(stripped, 'w') as dst:
+        for info in src.infolist():
+            if not info.filename.startswith('lib/'):
+                dst.writestr(info, src.read(info))
+    os.replace(stripped, file_path)
 
 
 lib_fixups: lib_fixups_user_type = {
@@ -191,8 +204,16 @@ blob_fixups: blob_fixups_user_type = {
     # straight to. patches/LGJDMB/ answers them out of the apk's own package
     # with the values read back out of the stock library, which is a great deal
     # less to carry than a 47 MB resource blob and a framework that links it.
+    #
+    # The only native code in the apk is ACCESS's two data broadcast (BML)
+    # engines, and they are 32-bit, which makes the whole app a 32-bit
+    # process. 0004 turns their JNI entry points into Java that reports
+    # failure, so the app runs as arm64 with data broadcasting off until the
+    # engines have a 64-bit replacement.
     'system/priv-app/LGJDMB/LGJDMB.apk': blob_fixup()
-        .apktool_patch('patches/LGJDMB'),
+        .apktool_patch('patches/LGJDMB')
+        .call(blob_fixup_drop_native_libs)
+        .stripzip(),
     # Same for the shared library declaration: the jar moved to /system, and the
     # path in here is what decides which linker namespace the app gets when it
     # loads the jar's JNI - product-clns cannot see libcutils.
