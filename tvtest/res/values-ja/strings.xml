@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2026 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources>
+    <string name="app_name">チューナーテスト</string>
+
+    <string name="section_stack">スタック</string>
+    <string name="init_scan">初期化（スキャン）</string>
+    <string name="init_view">初期化（視聴）</string>
+    <string name="exit">終了</string>
+
+    <string name="section_tune">選局</string>
+    <string name="hint_channel">物理チャンネル 13-52</string>
+    <string name="find">サーチ</string>
+    <string name="find_all">全チャンネル</string>
+    <string name="hint_service_id">サービス ID</string>
+    <string name="hint_service_type">種別</string>
+    <string name="select">選局</string>
+
+    <string name="section_capture">保存</string>
+    <string name="hint_path">出力ファイル</string>
+    <string name="record">録画</string>
+    <string name="record_path">録画（パス）</string>
+    <string name="stop">停止</string>
+    <string name="data_on">データ受信</string>
+    <string name="save_log">ログ保存</string>
+    <string name="clear_log">消去</string>
+
+    <string name="status_idle">待機中</string>
+    <string name="status_recording">録画中 %1$s: %2$s</string>
+</resources>

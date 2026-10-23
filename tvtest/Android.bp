@@ -1,0 +1,42 @@
+//
+// SPDX-FileCopyrightText: 2026 The LineageOS Project
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// A tuner bring-up tool: it drives the full-seg stack the way the stock app
+// does - init, find, select, record - and writes what comes off the air to a
+// file, so the chain from the ISDB-T front end through lgemtvserver can be
+// checked without the stock app's UI, its channel database or its CAS.
+//
+// Debug builds only: it is not something a user has any use for, and it takes
+// the tuner away from the app that does.
+android_app {
+    name: "JoanTvTest",
+
+    srcs: ["src/**/*.kt"],
+    resource_dirs: ["res"],
+
+    certificate: "platform",
+    platform_apis: true,
+
+    libs: ["com.lge.broadcast.jfullseg.stubs"],
+
+    // The <uses-library> in the manifest names a prebuilt that lives in the
+    // vendor tree's own soong namespace, so the build system cannot see the
+    // module the check wants to match it against. Nothing here is dexpreopted
+    // against it either - the classes are only resolved at runtime.
+    enforce_uses_libs: false,
+
+    optimize: {
+        enabled: false,
+    },
+}
+
+// Compile-time only view of /product/framework/com.lge.broadcast.jfullseg.jar.
+// The real classes come from that prebuilt at runtime through uses-library, so
+// this must never be installed.
+java_library {
+    name: "com.lge.broadcast.jfullseg.stubs",
+    srcs: ["stubs/**/*.java"],
+    installable: false,
+}

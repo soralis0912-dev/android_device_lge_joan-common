@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2026 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources>
+    <string name="app_name">Tuner test</string>
+
+    <string name="section_stack">Stack</string>
+    <string name="init_scan">Init (scan)</string>
+    <string name="init_view">Init (view)</string>
+    <string name="exit">Exit</string>
+
+    <string name="section_tune">Tune</string>
+    <string name="hint_channel">Channel 13-52</string>
+    <string name="find">Find</string>
+    <string name="find_all">Find all</string>
+    <string name="hint_service_id">Service ID</string>
+    <string name="hint_service_type">Type</string>
+    <string name="select">Select</string>
+
+    <string name="section_capture">Capture</string>
+    <string name="hint_path">Output file</string>
+    <string name="record">Record</string>
+    <string name="record_path">Record (path)</string>
+    <string name="stop">Stop</string>
+    <string name="data_on">Data on</string>
+    <string name="save_log">Save log</string>
+    <string name="clear_log">Clear</string>
+
+    <string name="status_idle">Idle</string>
+    <string name="status_recording">Recording %1$s: %2$s</string>
+</resources>

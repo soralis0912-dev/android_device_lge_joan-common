@@ -23,3 +23,11 @@ binder_call(lgemtvserver, hal_lge_dvb_default)
 # property, and without it lgemtvserver spins on "Waited for
 # hwservicemanager.ready" forever.
 get_prop(lgemtvserver, hwservicemanager_prop)
+
+# The recording is written by this service, not by the app that asked for it,
+# so the file the app opened has to be writable from here. Only through the
+# descriptor it passes: domain.te forbids anything outside the platform's own
+# short list from create, open or unlink on app data, which rules out handing
+# this service a path under /data/data and is why tvtest/ records through
+# record(FileDescriptor) rather than record(String).
+allow lgemtvserver system_app_data_file:file { getattr read write append };

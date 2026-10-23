@@ -127,6 +127,11 @@ PRODUCT_PACKAGES += \
     vendor.lge.hardware.dvb@1.0 \
     vendor.lge.hardware.mtv@1.0
 
+# The bring-up tool for the same stack - see tvtest/. Debug builds only: it
+# drives the tuner by hand and would take it away from the app that owns it.
+PRODUCT_PACKAGES_DEBUG += \
+    JoanTvTest
+
 # Dalvik
 $(call inherit-product, frameworks/native/build/phone-xhdpi-4096-dalvik-heap.mk)
 
